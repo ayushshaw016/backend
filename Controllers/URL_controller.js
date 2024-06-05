@@ -11,8 +11,12 @@ async function createshortid(req, res) {
     shortID: SHORTID,
     visithistory: [],
   });
-
-  return res.status(200).json({ shortid: SHORTID });
+  const allurls = urlschema.find({});
+  res.render("home", {
+    id: SHORTID,
+    url: allurls,
+  });
+  //   return res.status(200).json({ shortid: SHORTID });
 }
 async function redirectURL(req, res) {
   const inputshortid = req.params.shortid;

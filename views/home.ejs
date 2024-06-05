@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h2>Welcome</h2>
+    <% if (locals.id) { %>
+    <p>Generated ShortID is <%= id%></p>
+    <% } %>
+    <h2>Enter your URL</h2>
+    <form method="post" action="/url">
+      <input type="text" placeholder="www.google.com" name="url" />
+      <button type="submit">Generate</button>
+    </form>
+    <% if (locals.url) { %>
+    <table>
+      <thead>
+        <tr>
+          <th>S.No.</th>
+          <th>ShortID</th>
+          <th>URl</th>
+          <th>CLicks</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% url.forEach((oneurl, index)=> { %>
+
+        <tr>
+          <td><%= index+1%></td>
+          <td><%= oneurl.shortID %></td>
+          <td><%= oneurl.RedirectURL %></td>
+          <td><%= oneurl.visithistory.length %></td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+    <% } %>
+  </body>
+</html>
