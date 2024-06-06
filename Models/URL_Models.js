@@ -20,6 +20,10 @@ const URL_schema = new mongoose.Schema(
         },
       },
     ],
+    createdby: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "users",
+    },
   },
   { timestamps: true }
 );

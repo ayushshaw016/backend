@@ -10,30 +10,15 @@ async function createshortid(req, res) {
     RedirectURL: inputurl,
     shortID: SHORTID,
     visithistory: [],
+    createdby: req.user._id,
   });
   const allurls = await urlschema.find({});
-  res.render("home", {
+
+  return res.redirect("home", {
     id: SHORTID,
     url: allurls,
   });
   //   return res.status(200).json({ shortid: SHORTID });
-}
-async function redirectURL(req, res) {
-  const inputshortid = req.params.shortid;
-  const data = await urlschema.findOneAndUpdate(
-    { shortID: inputshortid },
-    {
-      $push: {
-        visithistory: {
-          timestamp: Date.now(),
-        },
-      },
-    }
-  );
-  if (!data) {
-    return res.status(400).json({ msg: "Error No url finded" });
-  }
-  return res.redirect(data.RedirectURL);
 }
 
 async function getthevisithistory(req, res) {
@@ -50,6 +35,5 @@ async function getthevisithistory(req, res) {
 }
 module.exports = {
   createshortid,
-  redirectURL,
   getthevisithistory,
 };

@@ -3,7 +3,11 @@ const staticRouter = express.Router();
 const urlschema = require("../Models/URL_Models");
 
 staticRouter.get("/", async (req, res) => {
-  const allurls = await urlschema.find({});
+  const isuser = req.user;
+  if (!isuser) {
+    return res.render("login");
+  }
+  const allurls = await urlschema.find({ createdby: req.user._id });
   res.render("home", {
     url: allurls,
   });

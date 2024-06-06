@@ -1,5 +1,10 @@
 const { userschema } = require("../Models/USER_Models");
 const urlschema = require("../Models/URL_Models");
+
+// IMPORTING THE UUID
+const { v4: uuidv4 } = require("uuid");
+
+const { setuser } = require("../Service/Authentication");
 async function handlesignup(req, res) {
   const data = req.body;
   if (!data) {
@@ -29,11 +34,14 @@ async function handlelogin(req, res) {
     return res.json({ msg: "No account founded" });
   }
   const reqpassword = data.password;
-  const allurls = await urlschema.find({});
   if (reqpassword === result.password) {
+    const allurls = await urlschema.find({});
+    const sessionID = uuidv4();
+    setuser(sessionID, result);
+    res.cookie("uid", sessionID);
     return res.render("home", { url: allurls });
   }
-  return res.render("login");
+  return res.json({ msg: "Erro" });
 }
 
 module.exports = {
