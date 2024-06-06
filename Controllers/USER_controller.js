@@ -1,5 +1,5 @@
 const { userschema } = require("../Models/USER_Models");
-
+const urlschema = require("../Models/URL_Models");
 async function handlesignup(req, res) {
   const data = req.body;
   if (!data) {
@@ -29,10 +29,11 @@ async function handlelogin(req, res) {
     return res.json({ msg: "No account founded" });
   }
   const reqpassword = data.password;
+  const allurls = await urlschema.find({});
   if (reqpassword === result.password) {
-    return res.render("home");
+    return res.render("home", { url: allurls });
   }
-  //   return res.render("login");
+  return res.render("login");
 }
 
 module.exports = {

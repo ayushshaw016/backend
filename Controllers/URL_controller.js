@@ -11,7 +11,7 @@ async function createshortid(req, res) {
     shortID: SHORTID,
     visithistory: [],
   });
-  const allurls = urlschema.find({});
+  const allurls = await urlschema.find({});
   res.render("home", {
     id: SHORTID,
     url: allurls,
