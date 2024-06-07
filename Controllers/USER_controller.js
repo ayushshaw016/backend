@@ -36,10 +36,10 @@ async function handlelogin(req, res) {
   const reqpassword = data.password;
   if (reqpassword === result.password) {
     const allurls = await urlschema.find({});
-    const sessionID = uuidv4();
-    setuser(sessionID, result);
-    res.cookie("uid", sessionID);
-    return res.render("home", { url: allurls });
+    const token = setuser(result);
+    // res.cookie("uid", token);
+    // return res.render("home", { url: allurls });
+    return res.json({ token });
   }
   return res.json({ msg: "Erro" });
 }
